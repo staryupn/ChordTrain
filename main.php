@@ -114,7 +114,6 @@ setProbabilityOfChordsInLabels();
 
 function classify($chords){
     $ttal = $GLOBALS['labelProbabilities'];
-    print_r($ttal);
     $classified = [];
     foreach (array_keys($ttal) as $obj) {
         $first = $GLOBALS['labelProbabilities'][$obj] + 1.01;
@@ -128,8 +127,20 @@ function classify($chords){
             $classified[$obj] = $first;
         }
     }
-    print_r($classified);
+
+    return [$ttal, $classified];
 }
 
-classify(['d', 'g', 'e', 'dm']);
-classify(['f#m7', 'a', 'dadd9', 'dmaj7', 'bm', 'bm7', 'd', 'f#m']);
+[$ttal, $classified] = classify(['d', 'g', 'e', 'dm']);
+standardOuputClassifieds($ttal, $classified);
+[$ttal, $classified] = classify(['f#m7', 'a', 'dadd9', 'dmaj7', 'bm', 'bm7', 'd', 'f#m']);
+standardOuputClassifieds($ttal, $classified);
+/**
+ * @param $ttal
+ * @param $classified
+ */
+function standardOuputClassifieds($ttal, $classified): void
+{
+    print_r($ttal);
+    print_r($classified);
+}
