@@ -24,16 +24,41 @@ function train($chords, $label)
 {
     $GLOBALS['songs'][] = [$label, $chords];
     $GLOBALS['label'][] = $label;
+    $GLOBALS['allChords'] = getUniqueChords($chords, $GLOBALS['allChords']);
+    $GLOBALS['labelCounts'] = updateLabelCounts($label, $GLOBALS['labelCounts']);
+}
+
+/**
+ * @param $chords
+ * @param $current_all_chords
+ * @return array
+ */
+function getUniqueChords($chords, $current_all_chords)
+{
+    $all_chords = [];
     for ($i = 0; $i < count($chords); $i++) {
-        if (!in_array($chords[$i], $GLOBALS['allChords'])) {
-            $GLOBALS['allChords'][] = $chords[$i];
+        if (!in_array($chords[$i], $current_all_chords)) {
+            $all_chords[] = $chords[$i];
         }
     }
-    if (!!(in_array($label, array_keys($GLOBALS['labelCounts'])))) {
-        $GLOBALS['labelCounts'][$label] = $GLOBALS['labelCounts'][$label] + 1;
+
+    return $all_chords;
+}
+
+/**
+ * @param $label
+ * @param $label_counts
+ * @return mixed
+ */
+function updateLabelCounts($label, $label_counts)
+{
+    if (!!(in_array($label, array_keys($label_counts)))) {
+        $label_counts[$label] = $label_counts[$label] + 1;
     } else {
-        $GLOBALS['labelCounts'][$label] = 1;
+        $label_counts[$label] = 1;
     }
+
+    return $label_counts;
 }
 
 function getNumberOfSongs()
