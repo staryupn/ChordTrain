@@ -26,7 +26,6 @@ function train($chords, $label)
     $GLOBALS['songs'][] = [$label, $chords];
     $GLOBALS['label'][] = $label;
     $GLOBALS['allChords'] = getUniqueChords($chords, $GLOBALS['allChords']);
-    print_r($GLOBALS['allChords']);
     $GLOBALS['labelCounts'] = updateLabelCounts($label, $GLOBALS['labelCounts']);
 }
 
