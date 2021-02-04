@@ -1,4 +1,5 @@
 <?php
+require 'global_data.php';
 
 // songs
 $imagine = ['c', 'cmaj7', 'f', 'am', 'dm', 'g', 'e7'];
@@ -25,6 +26,7 @@ function train($chords, $label)
     $GLOBALS['songs'][] = [$label, $chords];
     $GLOBALS['label'][] = $label;
     $GLOBALS['allChords'] = getUniqueChords($chords, $GLOBALS['allChords']);
+    print_r($GLOBALS['allChords']);
     $GLOBALS['labelCounts'] = updateLabelCounts($label, $GLOBALS['labelCounts']);
 }
 
@@ -100,15 +102,11 @@ function setProbabilityOfChordsInLabels()
     }
 }
 
-train($imagine, 'easy');
-train($somewhere_over_the_rainbow, 'easy');
-train($tooManyCooks, 'easy');
-train($iWillFollowYouIntoTheDark, 'medium');
-train($babyOneMoreTime, 'medium');
-train($creep, 'medium');
-train($paperBag, 'hard');
-train($toxic, 'hard');
-train($bulletproof, 'hard');
+$global_data_repo = new GlobalDataRepository();
+$song_chords_data = $global_data_repo->getAllSongChordData();
+foreach ($song_chords_data as $song_name => $song_data) {
+    train($song_data['chords'], $song_data['label']);
+}
 
 setLabelProbabilities();
 setChordCountsInLabels();
