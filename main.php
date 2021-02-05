@@ -96,7 +96,7 @@ function setProbabilityOfChordsInLabels()
     $GLOBALS['probabilityOfChordsInLabels'] = $GLOBALS['chordCountsInLabels'];
     foreach (array_keys($GLOBALS['probabilityOfChordsInLabels']) as $i) {
         foreach (array_keys($GLOBALS['probabilityOfChordsInLabels'][$i]) as $j) {
-            $GLOBALS['probabilityOfChordsInLabels'][$i][$j] = $GLOBALS['probabilityOfChordsInLabels'][$i][$j] * 1.0 / count($GLOBALS['songs']);
+            $GLOBALS['probabilityOfChordsInLabels'][$i][$j] = $GLOBALS['probabilityOfChordsInLabels'][$i][$j] * 1.0 / getNumberOfSongs();
         }
     }
 }
